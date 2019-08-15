@@ -11,7 +11,7 @@ import dagger.Module;
 import dagger.multibindings.IntoMap;
 
 @Module
-public abstract class MainViewModelModule {
+public abstract class ViewModelModule {
 
     @Binds
     @IntoMap

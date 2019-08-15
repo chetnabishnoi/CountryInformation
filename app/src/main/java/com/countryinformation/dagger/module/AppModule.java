@@ -27,5 +27,4 @@ public class AppModule {
     static RequestManager provideGlideInstance(Application application, RequestOptions requestOptions){
         return Glide.with(application).setDefaultRequestOptions(requestOptions);
     }
-
 }

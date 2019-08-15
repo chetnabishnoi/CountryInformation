@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,12 +25,9 @@ import com.countryinformation.glide.GlideApp;
 import com.countryinformation.glide.GlideRequest;
 import com.countryinformation.glide.SvgSoftwareLayerSetter;
 import com.countryinformation.model.CountryInfo;
-import com.countryinformation.network.Resource;
 import com.countryinformation.utils.VerticalSpacingItemDecorator;
 import com.countryinformation.viewmodel.MainViewModel;
 import com.countryinformation.viewmodel.ViewModelFactory;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -63,13 +59,8 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
         progressBar = view.findViewById(R.id.progress_bar_parent);
         parentErrorView = view.findViewById(R.id.parent_error);
 
-        if (mainViewModel == null) {
-            mainViewModel = new ViewModelProvider(this, viewModelFactory).get(MainViewModel.class);
-        }
         initRecyclerView(initGlide());
-        subscribeObservers();
         initSearchView();
-        fetchMovies();
     }
 
     private GlideRequest<PictureDrawable> initGlide() {
@@ -81,31 +72,31 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
                 .listener(new SvgSoftwareLayerSetter());
     }
 
-    private void fetchMovies() {
-        mainViewModel.fetchMovies();
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mainViewModel = new ViewModelProvider(this, viewModelFactory).get(MainViewModel.class);
+        subscribeObservers();
     }
 
     private void subscribeObservers() {
-        mainViewModel.observeCountryList().observe(this, new Observer<Resource<List<CountryInfo>>>() {
-            @Override
-            public void onChanged(Resource<List<CountryInfo>> resource) {
-                if (resource != null) {
-                    switch (resource.status) {
-                        case LOADING:
-                            progressBar.setVisibility(View.VISIBLE);
-                            parentErrorView.setVisibility(View.GONE);
-                            break;
-                        case SUCCESS:
-                            Log.d(TAG, "onChanged: inside success");
-                            progressBar.setVisibility(View.GONE);
-                            parentErrorView.setVisibility(View.GONE);
-                            mAdapter.setCountries(resource.data);
-                            break;
-                        case ERROR:
-                            progressBar.setVisibility(View.GONE);
-                            parentErrorView.setVisibility(View.VISIBLE);
-                            break;
-                    }
+        mainViewModel.getCountries().observe(this, resource -> {
+            if (resource != null) {
+                switch (resource.status) {
+                    case LOADING:
+                        progressBar.setVisibility(View.VISIBLE);
+                        parentErrorView.setVisibility(View.GONE);
+                        break;
+                    case SUCCESS:
+                        Log.d(TAG, "onChanged: inside success");
+                        progressBar.setVisibility(View.GONE);
+                        parentErrorView.setVisibility(View.GONE);
+                        mAdapter.setCountries(resource.data);
+                        break;
+                    case ERROR:
+                        progressBar.setVisibility(View.GONE);
+                        parentErrorView.setVisibility(View.VISIBLE);
+                        break;
                 }
             }
         });
