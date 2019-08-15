@@ -4,7 +4,6 @@
 
 <p>It is based on the android MVVM architectures and makes use fo the following libraries
 
-<li>Android Jetpack's Navigation component</li>
 <li>Retrofit2</li>
 <li>Dagger2</li>
 <li>ViewModel</li>
