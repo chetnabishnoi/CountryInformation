@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">CountryInformation</string>
+    <string name="oops_an_error_occurred">Oops! An error occurred.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

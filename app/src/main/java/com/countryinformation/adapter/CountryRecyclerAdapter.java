@@ -1,0 +1,84 @@
+package com.countryinformation.adapter;
+
+import android.graphics.drawable.PictureDrawable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.RequestBuilder;
+import com.countryinformation.R;
+import com.countryinformation.model.CountryInfo;
+
+import java.util.List;
+
+public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final int COUNTRY_TYPE = 1;
+    private List<CountryInfo> countryList;
+    private OnCountryListener mOnCountryListener;
+    private RequestBuilder<PictureDrawable> requestBuilder;
+
+    public CountryRecyclerAdapter(OnCountryListener mOnCountryListener, RequestBuilder<PictureDrawable> requestBuilder) {
+        this.mOnCountryListener = mOnCountryListener;
+        this.requestBuilder = requestBuilder;
+    }
+
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_country_adapter, viewGroup, false);
+        return new CountryViewHolder(view, mOnCountryListener);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+        requestBuilder.load(countryList.get(i).getFlag()).into(((CountryViewHolder) viewHolder).image);
+        ((CountryViewHolder) viewHolder).name.setText(countryList.get(i).getName());
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return COUNTRY_TYPE;
+    }
+
+    @Override
+    public int getItemCount() {
+        if (countryList != null) {
+            return countryList.size();
+        }
+        return 0;
+    }
+
+    public void setCountries(List<CountryInfo> countryList) {
+        this.countryList = countryList;
+        notifyDataSetChanged();
+    }
+
+    public CountryInfo getSelectedCountry(int position) {
+        if (countryList != null) {
+            if (countryList.size() > 0) {
+                return countryList.get(position);
+            }
+        }
+        return null;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
