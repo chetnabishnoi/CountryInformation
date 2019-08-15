@@ -57,26 +57,6 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         return 0;
     }
 
-    public void setCountries(List<CountryInfo> countryList) {
-        this.countryList = countryList;
-        this.countryListFull= new ArrayList<>(countryList);
-        notifyDataSetChanged();
-    }
-
-    public CountryInfo getSelectedCountry(int position) {
-        if (countryList != null) {
-            if (countryList.size() > 0) {
-                return countryList.get(position);
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public Filter getFilter() {
-        return exampleFilter;
-    }
-
     private Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -101,11 +81,33 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            countryList.clear();
-            countryList.addAll(((List) results.values));
-            notifyDataSetChanged();
+            if (results.values != null) {
+                countryList.clear();
+                countryList.addAll(((List) results.values));
+                notifyDataSetChanged();
+            }
         }
     };
+
+    public CountryInfo getSelectedCountry(int position) {
+        if (countryList != null) {
+            if (countryList.size() > 0) {
+                return countryList.get(position);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+
+    public void setCountries(List<CountryInfo> countryList) {
+        this.countryList = countryList;
+        this.countryListFull = new ArrayList<>(countryList);
+        notifyDataSetChanged();
+    }
 }
 
 
