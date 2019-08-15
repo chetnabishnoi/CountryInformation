@@ -1,5 +1,7 @@
 package com.countryinformation.viewmodel;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.MediatorLiveData;
@@ -18,6 +20,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainViewModel extends ViewModel {
+    private static final String TAG = "MainViewModel";
     private MediatorLiveData<Resource<List<CountryInfo>>> countryData = new MediatorLiveData<>();
     private ApiService apiService;
 
@@ -36,6 +39,7 @@ public class MainViewModel extends ViewModel {
                 apiService.fetchMovies()
                         .onErrorReturn(throwable -> new ArrayList<>())
                         .map((Function<List<CountryInfo>, Resource<List<CountryInfo>>>) countryInfoList -> {
+                            Log.d(TAG, "fetchMovies: api call again");
                             if (countryInfoList.size() == 0) {
                                 return Resource.error("Could not get the list of countries", null);
                             }

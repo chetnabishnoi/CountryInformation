@@ -11,14 +11,14 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.RequestBuilder;
+import com.countryinformation.HomeActivity;
 import com.countryinformation.R;
 import com.countryinformation.adapter.CountryRecyclerAdapter;
 import com.countryinformation.adapter.OnCountryListener;
@@ -39,6 +39,7 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
 
 public class HomeFragment extends BaseFragment implements OnCountryListener {
 
+    public static final String TAG = "HomeFragment";
     @Inject
     ViewModelFactory viewModelFactory;
 
@@ -47,8 +48,6 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
     private SearchView mSearchView;
     private CountryRecyclerAdapter mAdapter;
     private RelativeLayout progressBar, parentErrorView;
-    private static final String TAG = "HomeFragment";
-    private NavController navController;
 
     @Nullable
     @Override
@@ -63,17 +62,13 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
         mSearchView = view.findViewById(R.id.search_view);
         progressBar = view.findViewById(R.id.progress_bar_parent);
         parentErrorView = view.findViewById(R.id.parent_error);
-        navController = Navigation.findNavController(view);
 
-        mainViewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel.class);
+        if (mainViewModel == null) {
+            mainViewModel = new ViewModelProvider(this, viewModelFactory).get(MainViewModel.class);
+        }
         initRecyclerView(initGlide());
         subscribeObservers();
         initSearchView();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         fetchMovies();
     }
 
@@ -144,8 +139,8 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
     public void onCountryClick(int position) {
         mSearchView.setQuery("", false);
         CountryInfo selectedCountry = mAdapter.getSelectedCountry(position);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(DetailFragment.ARG_COUNTRY_DETAIL, selectedCountry);
-        navController.navigate(R.id.action_homeFragment_to_detailFragment, bundle);
+        if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+            ((HomeActivity) getActivity()).show(selectedCountry);
+        }
     }
 }

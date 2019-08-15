@@ -21,6 +21,17 @@ public class DetailFragment extends Fragment {
     static final String ARG_COUNTRY_DETAIL = "COUNTRY_DETAIL";
     private CountryInfo countryInfo;
 
+    /**
+     * Creates detail fragment for specific country
+     */
+    public static DetailFragment createInstance(CountryInfo countryInfo) {
+        DetailFragment fragment = new DetailFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(ARG_COUNTRY_DETAIL, countryInfo);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
