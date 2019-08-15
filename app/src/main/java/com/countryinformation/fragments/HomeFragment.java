@@ -2,7 +2,6 @@ package com.countryinformation.fragments;
 
 import android.graphics.drawable.PictureDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ import com.countryinformation.R;
 import com.countryinformation.adapter.CountryRecyclerAdapter;
 import com.countryinformation.adapter.OnCountryListener;
 import com.countryinformation.glide.GlideApp;
-import com.countryinformation.glide.GlideRequest;
 import com.countryinformation.glide.SvgSoftwareLayerSetter;
 import com.countryinformation.model.CountryInfo;
 import com.countryinformation.utils.VerticalSpacingItemDecorator;
@@ -63,43 +61,11 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
         initSearchView();
     }
 
-    private GlideRequest<PictureDrawable> initGlide() {
-        return GlideApp.with(this)
-                .as(PictureDrawable.class)
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_background)
-                .transition(withCrossFade())
-                .listener(new SvgSoftwareLayerSetter());
-    }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mainViewModel = new ViewModelProvider(this, viewModelFactory).get(MainViewModel.class);
         subscribeObservers();
-    }
-
-    private void subscribeObservers() {
-        mainViewModel.getCountries().observe(this, resource -> {
-            if (resource != null) {
-                switch (resource.status) {
-                    case LOADING:
-                        progressBar.setVisibility(View.VISIBLE);
-                        parentErrorView.setVisibility(View.GONE);
-                        break;
-                    case SUCCESS:
-                        Log.d(TAG, "onChanged: inside success");
-                        progressBar.setVisibility(View.GONE);
-                        parentErrorView.setVisibility(View.GONE);
-                        mAdapter.setCountries(resource.data);
-                        break;
-                    case ERROR:
-                        progressBar.setVisibility(View.GONE);
-                        parentErrorView.setVisibility(View.VISIBLE);
-                        break;
-                }
-            }
-        });
     }
 
     private void initRecyclerView(final RequestBuilder<PictureDrawable> requestBuilder) {
@@ -108,6 +74,15 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
         mRecyclerView.addItemDecoration(itemDecorator);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+    }
+
+    private RequestBuilder<PictureDrawable> initGlide() {
+        return GlideApp.with(this)
+                .as(PictureDrawable.class)
+                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_background)
+                .transition(withCrossFade())
+                .listener(new SvgSoftwareLayerSetter());
     }
 
     private void initSearchView() {
@@ -122,6 +97,28 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
             public boolean onQueryTextChange(String s) {
                 mAdapter.getFilter().filter(s);
                 return false;
+            }
+        });
+    }
+
+    private void subscribeObservers() {
+        mainViewModel.getCountries().observe(this, resource -> {
+            if (resource != null) {
+                switch (resource.status) {
+                    case LOADING:
+                        progressBar.setVisibility(View.VISIBLE);
+                        parentErrorView.setVisibility(View.GONE);
+                        break;
+                    case SUCCESS:
+                        progressBar.setVisibility(View.GONE);
+                        parentErrorView.setVisibility(View.GONE);
+                        mAdapter.setCountries(resource.data);
+                        break;
+                    case ERROR:
+                        progressBar.setVisibility(View.GONE);
+                        parentErrorView.setVisibility(View.VISIBLE);
+                        break;
+                }
             }
         });
     }
