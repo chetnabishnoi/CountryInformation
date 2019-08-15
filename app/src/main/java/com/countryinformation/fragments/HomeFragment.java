@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +24,6 @@ import com.countryinformation.adapter.OnCountryListener;
 import com.countryinformation.glide.GlideApp;
 import com.countryinformation.glide.SvgSoftwareLayerSetter;
 import com.countryinformation.model.CountryInfo;
-import com.countryinformation.utils.VerticalSpacingItemDecorator;
 import com.countryinformation.viewmodel.MainViewModel;
 import com.countryinformation.viewmodel.ViewModelFactory;
 
@@ -70,8 +70,8 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
 
     private void initRecyclerView(final RequestBuilder<PictureDrawable> requestBuilder) {
         mAdapter = new CountryRecyclerAdapter(this, requestBuilder);
-        VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(30);
-        mRecyclerView.addItemDecoration(itemDecorator);
+        DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        mRecyclerView.addItemDecoration(itemDecor);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
     }

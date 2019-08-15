@@ -39,9 +39,12 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-        requestBuilder.load(countryList.get(i).getFlag()).into(((CountryViewHolder) viewHolder).image);
-        ((CountryViewHolder) viewHolder).name.setText(countryList.get(i).getName());
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHold, int i) {
+        CountryInfo countryInfo = countryList.get(i);
+        CountryViewHolder viewHolder = (CountryViewHolder) viewHold;
+        requestBuilder.load(countryInfo.getFlag()).into(viewHolder.image);
+        viewHolder.name.setText(countryInfo.getName());
+        viewHolder.capital.setText(countryInfo.getCapital());
     }
 
     @Override

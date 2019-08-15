@@ -1,24 +1,31 @@
 package com.countryinformation.fragments;
 
 
+import android.graphics.drawable.PictureDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.RequestBuilder;
 import com.countryinformation.R;
+import com.countryinformation.glide.GlideApp;
+import com.countryinformation.glide.SvgSoftwareLayerSetter;
 import com.countryinformation.model.CountryInfo;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DetailFragment extends Fragment {
-    static final String ARG_COUNTRY_DETAIL = "COUNTRY_DETAIL";
+    private static final String ARG_COUNTRY_DETAIL = "COUNTRY_DETAIL";
     private CountryInfo countryInfo;
 
     /**
@@ -57,5 +64,17 @@ public class DetailFragment extends Fragment {
         countryName.setText(countryInfo.getName());
         capital.setText(countryInfo.getCapital());
         region.setText(countryInfo.getRegion());
+        RequestBuilder<PictureDrawable> requestBuilder = initGlide();
+        requestBuilder.load(countryInfo.getFlag()).into((ImageView) view.findViewById(R.id.image_flag));
     }
+
+    private RequestBuilder<PictureDrawable> initGlide() {
+        return GlideApp.with(this)
+                .as(PictureDrawable.class)
+                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_background)
+                .transition(withCrossFade())
+                .listener(new SvgSoftwareLayerSetter());
+    }
+
 }
