@@ -128,16 +128,13 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-
-//                mAdapter.displayLoading();
-//                mRecipeListViewModel.searchRecipesApi(s, 1);
-                mSearchView.clearFocus();
-
+                mAdapter.getFilter().filter(s);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
+                mAdapter.getFilter().filter(s);
                 return false;
             }
         });

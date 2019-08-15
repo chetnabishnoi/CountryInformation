@@ -4,6 +4,8 @@ import android.graphics.drawable.PictureDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,12 +14,15 @@ import com.bumptech.glide.RequestBuilder;
 import com.countryinformation.R;
 import com.countryinformation.model.CountryInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
     private static final int COUNTRY_TYPE = 1;
     private List<CountryInfo> countryList;
+    private List<CountryInfo> countryListFull;
+
     private OnCountryListener mOnCountryListener;
     private RequestBuilder<PictureDrawable> requestBuilder;
 
@@ -54,6 +59,7 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public void setCountries(List<CountryInfo> countryList) {
         this.countryList = countryList;
+        this.countryListFull= new ArrayList<>(countryList);
         notifyDataSetChanged();
     }
 
@@ -66,6 +72,40 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         return null;
     }
 
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<CountryInfo> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(countryListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (CountryInfo item : countryListFull) {
+                    if (item.getName().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            countryList.clear();
+            countryList.addAll(((List) results.values));
+            notifyDataSetChanged();
+        }
+    };
 }
 
 

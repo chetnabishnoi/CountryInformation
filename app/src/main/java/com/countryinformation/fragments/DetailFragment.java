@@ -41,6 +41,10 @@ public class DetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         TextView countryName = view.findViewById(R.id.country_name);
+        TextView capital = view.findViewById(R.id.captial);
+        TextView region = view.findViewById(R.id.region);
         countryName.setText(countryInfo.getName());
+        capital.setText(countryInfo.getCapital());
+        region.setText(countryInfo.getRegion());
     }
 }
