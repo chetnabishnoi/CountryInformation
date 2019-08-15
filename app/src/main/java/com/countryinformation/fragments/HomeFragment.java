@@ -142,6 +142,7 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
 
     @Override
     public void onCountryClick(int position) {
+        mSearchView.setQuery("", false);
         CountryInfo selectedCountry = mAdapter.getSelectedCountry(position);
         Bundle bundle = new Bundle();
         bundle.putParcelable(DetailFragment.ARG_COUNTRY_DETAIL, selectedCountry);
