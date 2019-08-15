@@ -2,7 +2,9 @@ package com.countryinformation;
 
 import android.os.Bundle;
 
-public class HomeActivity extends BaseActivity  {
+import dagger.android.support.DaggerAppCompatActivity;
+
+public class HomeActivity extends DaggerAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
