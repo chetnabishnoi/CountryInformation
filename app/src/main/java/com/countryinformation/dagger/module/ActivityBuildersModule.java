@@ -10,7 +10,7 @@ public abstract class ActivityBuildersModule {
 
     @ContributesAndroidInjector(
             modules = {ViewModelModule.class,
-            FragmentBuildersModule.class}
+                    FragmentBuildersModule.class}
     )
     abstract HomeActivity contributeHomeActivity();
 }

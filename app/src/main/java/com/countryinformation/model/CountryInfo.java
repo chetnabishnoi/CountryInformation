@@ -8,47 +8,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class CountryInfo implements Parcelable {
 
-    @SerializedName("name")
-    @Expose
-    private String name;
-
-    @SerializedName("capital")
-    @Expose
-    private String capital;
-
-    @SerializedName("region")
-    @Expose
-    private String region;
-
-    @SerializedName("population")
-    @Expose
-    private long population;
-
-    @SerializedName("flag")
-    @Expose
-    private String flag;
-
-
-    public CountryInfo() {
-    }
-
-    public CountryInfo(String name, String capital, String region, long population, String flag) {
-        this.name = name;
-        this.capital = capital;
-        this.region = region;
-        this.population = population;
-        this.flag = flag;
-    }
-
-
-    protected CountryInfo(Parcel in) {
-        name = in.readString();
-        capital = in.readString();
-        region = in.readString();
-        population = in.readLong();
-        flag = in.readString();
-    }
-
     public static final Creator<CountryInfo> CREATOR = new Creator<CountryInfo>() {
         @Override
         public CountryInfo createFromParcel(Parcel in) {
@@ -60,6 +19,41 @@ public class CountryInfo implements Parcelable {
             return new CountryInfo[size];
         }
     };
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("capital")
+    @Expose
+    private String capital;
+    @SerializedName("region")
+    @Expose
+    private String region;
+    @SerializedName("population")
+    @Expose
+    private long population;
+    @SerializedName("flag")
+    @Expose
+    private String flag;
+
+    public CountryInfo() {
+    }
+
+
+    public CountryInfo(String name, String capital, String region, long population, String flag) {
+        this.name = name;
+        this.capital = capital;
+        this.region = region;
+        this.population = population;
+        this.flag = flag;
+    }
+
+    protected CountryInfo(Parcel in) {
+        name = in.readString();
+        capital = in.readString();
+        region = in.readString();
+        population = in.readLong();
+        flag = in.readString();
+    }
 
     public String getName() {
         return name;

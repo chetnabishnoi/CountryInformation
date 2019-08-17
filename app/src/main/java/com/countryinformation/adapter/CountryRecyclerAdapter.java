@@ -25,6 +25,38 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private OnCountryListener mOnCountryListener;
     private RequestBuilder<PictureDrawable> requestBuilder;
+    
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<CountryInfo> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(countryListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (CountryInfo item : countryListFull) {
+                    if (item.getName().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            if (results.values != null) {
+                countryList.clear();
+                countryList.addAll(((List) results.values));
+                notifyDataSetChanged();
+            }
+        }
+    };
 
     public CountryRecyclerAdapter(OnCountryListener mOnCountryListener, RequestBuilder<PictureDrawable> requestBuilder) {
         this.mOnCountryListener = mOnCountryListener;
@@ -59,38 +91,6 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
         return 0;
     }
-
-    private Filter exampleFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<CountryInfo> filteredList = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(countryListFull);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-
-                for (CountryInfo item : countryListFull) {
-                    if (item.getName().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item);
-                    }
-                }
-            }
-
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            if (results.values != null) {
-                countryList.clear();
-                countryList.addAll(((List) results.values));
-                notifyDataSetChanged();
-            }
-        }
-    };
 
     public CountryInfo getSelectedCountry(int position) {
         if (countryList != null) {

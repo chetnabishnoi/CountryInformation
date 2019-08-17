@@ -1,5 +1,6 @@
 package com.countryinformation.fragments;
 
+import android.content.Context;
 import android.graphics.drawable.PictureDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -42,6 +43,7 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
     private SearchView mSearchView;
     private CountryRecyclerAdapter mAdapter;
     private RelativeLayout progressBar, parentErrorView;
+    private Context mContext;
 
     @Nullable
     @Override
@@ -62,6 +64,12 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mainViewModel = new ViewModelProvider(this, viewModelFactory).get(MainViewModel.class);
@@ -70,7 +78,7 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
 
     private void initRecyclerView(final RequestBuilder<PictureDrawable> requestBuilder) {
         mAdapter = new CountryRecyclerAdapter(this, requestBuilder);
-        DividerItemDecoration itemDecor = new DividerItemDecoration(this.getContext(), DividerItemDecoration.VERTICAL);
+        DividerItemDecoration itemDecor = new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL);
         mRecyclerView.addItemDecoration(itemDecor);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));

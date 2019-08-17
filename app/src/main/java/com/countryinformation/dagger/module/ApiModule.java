@@ -11,7 +11,7 @@ import retrofit2.Retrofit;
 public class ApiModule {
 
     @Provides
-     ApiService provideApiService( Retrofit retrofit) {
+    ApiService provideApiService(Retrofit retrofit) {
         return retrofit.create(ApiService.class);
     }
 }
