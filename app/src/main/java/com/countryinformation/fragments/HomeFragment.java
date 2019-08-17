@@ -70,7 +70,7 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
 
     private void initRecyclerView(final RequestBuilder<PictureDrawable> requestBuilder) {
         mAdapter = new CountryRecyclerAdapter(this, requestBuilder);
-        DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        DividerItemDecoration itemDecor = new DividerItemDecoration(this.getContext(), DividerItemDecoration.VERTICAL);
         mRecyclerView.addItemDecoration(itemDecor);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));

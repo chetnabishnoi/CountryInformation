@@ -38,7 +38,7 @@
                 android:fontFamily="@font/larsseit"
                 android:singleLine="false"
                 android:textColor="@color/colorBlack"
-                android:textSize="@dimen/heading"
+                android:textSize="@dimen/heading2"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView

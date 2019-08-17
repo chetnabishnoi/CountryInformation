@@ -5,44 +5,120 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
-    android:padding="@dimen/layout_padding"
     tools:context=".fragments.DetailFragment">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/image_flag"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/country_name"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_top"
-        android:textSize="20sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_flag" />
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:titleTextColor="@color/colorBlack" />
 
-    <TextView
-        android:id="@+id/captial"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_top"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/country_name" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="@dimen/layout_padding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_flag"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/region"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_top"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/captial" />
+        <TextView
+            android:id="@+id/country_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top"
+            android:fontFamily="@font/larsseit"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/heading1"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_flag" />
 
+        <TextView
+            android:id="@+id/capital_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/larsseit"
+            android:text="Capital : "
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/heading2"
+            app:layout_constraintHorizontal_bias="0.35"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/country_name" />
+
+        <TextView
+            android:id="@+id/capital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left"
+            android:fontFamily="@font/larsseit"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/heading2"
+            app:layout_constraintLeft_toRightOf="@+id/capital_label"
+            app:layout_constraintTop_toTopOf="@+id/capital_label" />
+
+        <TextView
+            android:id="@+id/region_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/larsseit"
+            android:text="Region : "
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/heading2"
+            app:layout_constraintHorizontal_bias="0.40"
+            app:layout_constraintLeft_toLeftOf="@+id/capital_label"
+            app:layout_constraintTop_toBottomOf="@+id/capital_label" />
+
+        <TextView
+            android:id="@+id/region"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/larsseit"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/heading2"
+            app:layout_constraintLeft_toLeftOf="@+id/capital"
+            app:layout_constraintLeft_toRightOf="@+id/region_label"
+            app:layout_constraintTop_toTopOf="@+id/region_label" />
+
+        <TextView
+            android:id="@+id/population_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/larsseit"
+            android:text="Population : "
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/heading2"
+            app:layout_constraintHorizontal_bias="0.40"
+            app:layout_constraintLeft_toLeftOf="@+id/capital_label"
+            app:layout_constraintTop_toBottomOf="@+id/region_label" />
+
+        <TextView
+            android:id="@+id/population"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/larsseit"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/heading2"
+            app:layout_constraintLeft_toLeftOf="@+id/capital"
+            app:layout_constraintLeft_toRightOf="@+id/population_label"
+            app:layout_constraintTop_toTopOf="@+id/population_label" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

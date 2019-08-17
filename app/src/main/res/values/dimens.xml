@@ -3,9 +3,11 @@
     <dimen name="layout_padding">16dp</dimen>
     <dimen name="layout_padding_vertical">12dp</dimen>
     <dimen name="margin_top">20dp</dimen>
+    <dimen name="margin_left">40dp</dimen>
 
     <!--Text Sizes-->
-    <dimen name="heading">16sp</dimen>
+    <dimen name="heading1">20sp</dimen>
+    <dimen name="heading2">16sp</dimen>
     <dimen name="paragraphText">14sp</dimen>
 
 </resources>

@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.RequestBuilder;
@@ -18,6 +20,8 @@ import com.countryinformation.R;
 import com.countryinformation.glide.GlideApp;
 import com.countryinformation.glide.SvgSoftwareLayerSetter;
 import com.countryinformation.model.CountryInfo;
+
+import java.text.DecimalFormat;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -58,14 +62,30 @@ public class DetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         TextView countryName = view.findViewById(R.id.country_name);
-        TextView capital = view.findViewById(R.id.captial);
+        TextView capital = view.findViewById(R.id.capital);
         TextView region = view.findViewById(R.id.region);
+        TextView population = view.findViewById(R.id.population);
+
         countryName.setText(countryInfo.getName());
         capital.setText(countryInfo.getCapital());
         region.setText(countryInfo.getRegion());
+        DecimalFormat formatter = new DecimalFormat("##,###,###");
+        String populationValue = formatter.format(countryInfo.getPopulation());
+        population.setText(populationValue);
         RequestBuilder<PictureDrawable> requestBuilder = initGlide();
         requestBuilder.load(countryInfo.getFlag()).into((ImageView) view.findViewById(R.id.image_flag));
+
+        setupToolbar(view.findViewById(R.id.toolbar));
+    }
+
+    private void setupToolbar(Toolbar toolbar) {
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.detail_fragment_title));
+        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
     }
 
     private RequestBuilder<PictureDrawable> initGlide() {
