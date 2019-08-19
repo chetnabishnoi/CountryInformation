@@ -21,7 +21,7 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private static final int COUNTRY_TYPE = 1;
     private List<CountryInfo> countryList;
-    private List<CountryInfo> countryListFull;
+    private List<CountryInfo> filteredList;
 
     private OnCountryListener mOnCountryListener;
     private RequestBuilder<PictureDrawable> requestBuilder;
@@ -31,11 +31,11 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         protected FilterResults performFiltering(CharSequence constraint) {
             List<CountryInfo> filteredList = new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(countryListFull);
+                filteredList.addAll(CountryRecyclerAdapter.this.filteredList);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (CountryInfo item : countryListFull) {
+                for (CountryInfo item : CountryRecyclerAdapter.this.filteredList) {
                     if (item.getName().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
@@ -52,7 +52,7 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         protected void publishResults(CharSequence constraint, FilterResults results) {
             if (results.values != null) {
                 countryList.clear();
-                countryList.addAll(((List) results.values));
+                countryList.addAll((List<CountryInfo>) results.values);
                 notifyDataSetChanged();
             }
         }
@@ -108,7 +108,7 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public void setCountries(List<CountryInfo> countryList) {
         this.countryList = countryList;
-        this.countryListFull = new ArrayList<>(countryList);
+        this.filteredList = new ArrayList<>(countryList);
         notifyDataSetChanged();
     }
 }

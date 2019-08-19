@@ -23,8 +23,8 @@ public class CountryRepository {
         this.countryService = countryService;
     }
 
-    public Flowable<Resource<List<CountryInfo>>> fetchCountries() {
-        return countryService.fetchMovies()
+    public Flowable<Resource<List<CountryInfo>>> getCountries() {
+        return countryService.getCountries()
                 .onErrorReturn(throwable -> new ArrayList<>())
                 .map((Function<List<CountryInfo>, Resource<List<CountryInfo>>>) countryInfoList -> {
                     if (countryInfoList.size() == 0) {

@@ -61,6 +61,8 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
 
         initRecyclerView(initGlide());
         initSearchView();
+        mainViewModel = new ViewModelProvider(this, viewModelFactory).get(MainViewModel.class);
+
     }
 
     @Override
@@ -70,10 +72,8 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mainViewModel = new ViewModelProvider(this, viewModelFactory).get(MainViewModel.class);
-        mainViewModel.fetchCountries();
+    public void onStart() {
+        super.onStart();
         subscribeObservers();
     }
 
@@ -111,7 +111,7 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
     }
 
     private void subscribeObservers() {
-        mainViewModel.getCountries().observe(this, resource -> {
+        mainViewModel.observeCountryList().observe(this, resource -> {
             if (resource != null) {
                 switch (resource.status) {
                     case LOADING:
@@ -130,6 +130,8 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
                 }
             }
         });
+
+        mainViewModel.getCountries();
     }
 
     @Override

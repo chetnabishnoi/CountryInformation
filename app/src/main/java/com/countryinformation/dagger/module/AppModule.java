@@ -13,9 +13,16 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import retrofit2.Retrofit;
 
 @Module
 public class AppModule {
+
+
+    @Provides
+    CountryService provideApiService(Retrofit retrofit) {
+        return retrofit.create(CountryService.class);
+    }
 
     @Singleton
     @Provides
