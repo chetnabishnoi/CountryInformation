@@ -1,51 +1,37 @@
 package com.countryinformation.repository;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.LiveDataReactiveStreams;
-import androidx.lifecycle.MediatorLiveData;
-
 import com.countryinformation.model.CountryInfo;
-import com.countryinformation.network.ApiService;
+import com.countryinformation.network.CountryService;
 import com.countryinformation.network.Resource;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
+import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
+@Singleton
 public class CountryRepository {
-    private MediatorLiveData<Resource<List<CountryInfo>>> mObservableCountry;
+    private final CountryService countryService;
 
     @Inject
-    CountryRepository(ApiService apiService) {
-        mObservableCountry = new MediatorLiveData<>();
-        mObservableCountry.setValue(Resource.loading(null));
-        final LiveData<Resource<List<CountryInfo>>> source = LiveDataReactiveStreams.fromPublisher(
-                apiService.fetchMovies()
-                        .onErrorReturn(throwable -> new ArrayList<>())
-                        .map((Function<List<CountryInfo>, Resource<List<CountryInfo>>>) countryInfoList -> {
-                            if (countryInfoList.size() == 0) {
-                                return Resource.error("Could not get the list of countries", null);
-                            }
-                            return Resource.success(countryInfoList);
-                        })
-                        .subscribeOn(Schedulers.io())
-        );
-
-
-        mObservableCountry.addSource(source, resource -> {
-            mObservableCountry.postValue(resource);
-            mObservableCountry.removeSource(source);
-        });
+    public CountryRepository(CountryService countryService) {
+        this.countryService = countryService;
     }
 
-    /**
-     * Get the list of products from the database and get notified when the data changes.
-     */
-    public LiveData<Resource<List<CountryInfo>>> getCountries() {
-        return mObservableCountry;
+    public Flowable<Resource<List<CountryInfo>>> fetchCountries() {
+        return countryService.fetchMovies()
+                .onErrorReturn(throwable -> new ArrayList<>())
+                .map((Function<List<CountryInfo>, Resource<List<CountryInfo>>>) countryInfoList -> {
+                    if (countryInfoList.size() == 0) {
+                        return Resource.error("Could not get the list of countries", null);
+                    }
+                    return Resource.success(countryInfoList);
+                })
+                .subscribeOn(Schedulers.io());
     }
 }

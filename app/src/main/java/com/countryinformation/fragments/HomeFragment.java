@@ -73,6 +73,7 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mainViewModel = new ViewModelProvider(this, viewModelFactory).get(MainViewModel.class);
+        mainViewModel.fetchCountries();
         subscribeObservers();
     }
 

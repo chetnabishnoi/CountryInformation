@@ -1,7 +1,7 @@
 package com.countryinformation.dagger.module;
 
 
-import com.countryinformation.network.ApiService;
+import com.countryinformation.network.CountryService;
 
 import dagger.Module;
 import dagger.Provides;
@@ -11,7 +11,7 @@ import retrofit2.Retrofit;
 public class ApiModule {
 
     @Provides
-    ApiService provideApiService(Retrofit retrofit) {
-        return retrofit.create(ApiService.class);
+    CountryService provideApiService(Retrofit retrofit) {
+        return retrofit.create(CountryService.class);
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 import io.reactivex.Flowable;
 import retrofit2.http.GET;
 
-public interface ApiService {
+public interface CountryService {
 
     @GET("rest/v2/all")
     Flowable<List<CountryInfo>> fetchMovies();

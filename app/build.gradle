@@ -73,6 +73,22 @@ dependencies {
 
     // Testing dependencies
     testImplementation "junit:junit:$rootProject.junitVersion"
+
     androidTestImplementation "com.android.support.test:runner:$rootProject.testRunnerVersion"
+    androidTestImplementation "com.android.support.test:rules:$rootProject.testRunnerVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+
+    // JUnit Jupiter
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$rootProject.junit_jupiter_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$rootProject.junit_jupiter_version"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$rootProject.junit_jupiter_version"
+
+    androidTestImplementation "androidx.test:core:$rootProject.androidx_test_version"
+    androidTestImplementation "androidx.test:runner:$rootProject.androidx_test_version"
+
+    androidTestImplementation "androidx.arch.core:core-testing:$rootProject.androidx_arch_test_version"
+
+    testImplementation "org.mockito:mockito-core:$rootProject.mockito_version"
+
+
 }
