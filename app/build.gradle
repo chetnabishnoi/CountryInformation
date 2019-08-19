@@ -50,10 +50,6 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
     implementation 'com.caverock:androidsvg:1.2.1'
 
-    //Navigation
-    implementation "androidx.navigation:navigation-fragment:$rootProject.navVersion"
-    implementation "androidx.navigation:navigation-ui:$rootProject.navVersion"
-
     //Networking
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"

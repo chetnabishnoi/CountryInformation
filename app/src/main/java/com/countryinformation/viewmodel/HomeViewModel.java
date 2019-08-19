@@ -35,7 +35,7 @@ public class HomeViewModel extends ViewModel {
 
     /**
      *
-     * @returns The LiveData for list of countries
+     * @return LiveData for list of countries
      */
     public LiveData<Resource<List<Country>>> observeCountryList() {
         return mObservableCountries;
