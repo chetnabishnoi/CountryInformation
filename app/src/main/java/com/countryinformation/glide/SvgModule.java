@@ -14,8 +14,9 @@ import com.caverock.androidsvg.SVG;
 import java.io.InputStream;
 
 /**
- * Module for the SVG sample app.
+ * Module for the SVG .
  */
+
 @GlideModule
 public class SvgModule extends AppGlideModule {
     @Override

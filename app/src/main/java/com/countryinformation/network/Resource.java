@@ -5,6 +5,12 @@ import androidx.annotation.Nullable;
 
 import java.util.Objects;
 
+/**
+ * A wrapper for the response from retrofit so that different status
+ * i.e. Success, Error and Loading could be show on UI
+ *
+ * @param <T>
+ */
 public class Resource<T> {
 
     @NonNull
@@ -14,10 +20,10 @@ public class Resource<T> {
     public final T data;
 
     @Nullable
-    public final String message;
+    private final String message;
 
 
-    public Resource(@NonNull Status status, @Nullable T data, @Nullable String message) {
+    private Resource(@NonNull Status status, @Nullable T data, @Nullable String message) {
         this.status = status;
         this.data = data;
         this.message = message;

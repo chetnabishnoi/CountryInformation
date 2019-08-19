@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.countryinformation.model.CountryInfo;
+import com.countryinformation.model.Country;
 import com.countryinformation.network.Resource;
 import com.countryinformation.repository.CountryRepository;
 
@@ -13,20 +13,20 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class MainViewModel extends ViewModel {
+public class HomeViewModel extends ViewModel {
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
-    private final MediatorLiveData<Resource<List<CountryInfo>>> mObservableCountries = new MediatorLiveData<>();
+    private final MediatorLiveData<Resource<List<Country>>> mObservableCountries = new MediatorLiveData<>();
     private CountryRepository countryRepository;
 
     @Inject
-    MainViewModel(CountryRepository countryRepository) {
+    HomeViewModel(CountryRepository countryRepository) {
         this.countryRepository = countryRepository;
     }
 
     public void getCountries() {
         mObservableCountries.setValue(Resource.loading(null));
-        LiveData<Resource<List<CountryInfo>>> source = LiveDataReactiveStreams.fromPublisher(countryRepository.getCountries());
+        LiveData<Resource<List<Country>>> source = LiveDataReactiveStreams.fromPublisher(countryRepository.getCountries());
         mObservableCountries.addSource(source, resource -> {
             mObservableCountries.postValue(resource);
             mObservableCountries.removeSource(source);
@@ -34,9 +34,10 @@ public class MainViewModel extends ViewModel {
     }
 
     /**
-     * Get the list of countries from the repository and get notified when the data changes.
+     *
+     * @returns The LiveData for list of countries
      */
-    public LiveData<Resource<List<CountryInfo>>> observeCountryList() {
+    public LiveData<Resource<List<Country>>> observeCountryList() {
         return mObservableCountries;
     }
 }

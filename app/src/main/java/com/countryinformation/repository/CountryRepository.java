@@ -1,6 +1,6 @@
 package com.countryinformation.repository;
 
-import com.countryinformation.model.CountryInfo;
+import com.countryinformation.model.Country;
 import com.countryinformation.network.CountryService;
 import com.countryinformation.network.Resource;
 
@@ -23,10 +23,16 @@ public class CountryRepository {
         this.countryService = countryService;
     }
 
-    public Flowable<Resource<List<CountryInfo>>> getCountries() {
+    /**
+     * Fetches the list of countries,
+     *
+     * @return {@link com.countryinformation.network.Resource} ERROR with null data or
+     * list of countries wrapped in {@link com.countryinformation.network.Resource} with SUCCESS
+     */
+    public Flowable<Resource<List<Country>>> getCountries() {
         return countryService.getCountries()
                 .onErrorReturn(throwable -> new ArrayList<>())
-                .map((Function<List<CountryInfo>, Resource<List<CountryInfo>>>) countryInfoList -> {
+                .map((Function<List<Country>, Resource<List<Country>>>) countryInfoList -> {
                     if (countryInfoList.size() == 0) {
                         return Resource.error("Could not get the list of countries", null);
                     }

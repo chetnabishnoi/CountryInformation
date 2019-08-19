@@ -4,7 +4,7 @@ package com.countryinformation.dagger.module;
 import androidx.lifecycle.ViewModel;
 
 import com.countryinformation.dagger.ViewModelKey;
-import com.countryinformation.viewmodel.MainViewModel;
+import com.countryinformation.viewmodel.HomeViewModel;
 
 import dagger.Binds;
 import dagger.Module;
@@ -15,6 +15,6 @@ public abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(MainViewModel.class)
-    public abstract ViewModel bindMainViewModel(MainViewModel viewModel);
+    @ViewModelKey(HomeViewModel.class)
+    public abstract ViewModel bindMainViewModel(HomeViewModel viewModel);
 }

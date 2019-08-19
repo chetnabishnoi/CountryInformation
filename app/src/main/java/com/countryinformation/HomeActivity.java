@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.countryinformation.fragments.DetailFragment;
 import com.countryinformation.fragments.HomeFragment;
-import com.countryinformation.model.CountryInfo;
+import com.countryinformation.model.Country;
 
 import dagger.android.support.DaggerAppCompatActivity;
 
@@ -28,8 +28,8 @@ public class HomeActivity extends DaggerAppCompatActivity {
     /**
      * Shows the country detail homeFragment
      */
-    public void show(CountryInfo countryInfo) {
-        DetailFragment detailFragment = DetailFragment.createInstance(countryInfo);
+    public void show(Country country) {
+        DetailFragment detailFragment = DetailFragment.createInstance(country);
 
         getSupportFragmentManager()
                 .beginTransaction()

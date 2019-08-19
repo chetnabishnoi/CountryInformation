@@ -13,33 +13,33 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.RequestBuilder;
 import com.countryinformation.R;
-import com.countryinformation.model.CountryInfo;
+import com.countryinformation.model.Country;
 
 import java.text.DecimalFormat;
 
 import javax.inject.Inject;
 
 /**
- * A simple {@link Fragment} subclass.
+ * This fragment shows detail about the country selected like
+ * name, capital, population etc.
  */
 public class DetailFragment extends BaseFragment {
     private static final String ARG_COUNTRY_DETAIL = "COUNTRY_DETAIL";
-    private CountryInfo countryInfo;
-
+    //For showing the svg pictures
     @Inject
     RequestBuilder<PictureDrawable> glide;
+    private Country country;
 
     /**
      * Creates detail fragment for specific country
      */
-    public static DetailFragment createInstance(CountryInfo countryInfo) {
+    public static DetailFragment createInstance(Country country) {
         DetailFragment fragment = new DetailFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_COUNTRY_DETAIL, countryInfo);
+        args.putParcelable(ARG_COUNTRY_DETAIL, country);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,7 +49,7 @@ public class DetailFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         Bundle arguments = getArguments();
         if (arguments != null) {
-            countryInfo = arguments.getParcelable(ARG_COUNTRY_DETAIL);
+            country = arguments.getParcelable(ARG_COUNTRY_DETAIL);
         }
     }
 
@@ -69,13 +69,13 @@ public class DetailFragment extends BaseFragment {
         TextView region = view.findViewById(R.id.region);
         TextView population = view.findViewById(R.id.population);
 
-        countryName.setText(countryInfo.getName());
-        capital.setText(countryInfo.getCapital());
-        region.setText(countryInfo.getRegion());
+        countryName.setText(country.getName());
+        capital.setText(country.getCapital());
+        region.setText(country.getRegion());
         DecimalFormat formatter = new DecimalFormat("##,###,###");
-        String populationValue = formatter.format(countryInfo.getPopulation());
+        String populationValue = formatter.format(country.getPopulation());
         population.setText(populationValue);
-        glide.load(countryInfo.getFlag()).into((ImageView) view.findViewById(R.id.image_flag));
+        glide.load(country.getFlag()).into((ImageView) view.findViewById(R.id.image_flag));
 
         setupToolbar(view.findViewById(R.id.toolbar));
     }

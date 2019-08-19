@@ -1,6 +1,6 @@
 package com.countryinformation.repository;
 
-import com.countryinformation.model.CountryInfo;
+import com.countryinformation.model.Country;
 import com.countryinformation.network.CountryService;
 import com.countryinformation.network.Resource;
 
@@ -34,24 +34,24 @@ class CountryRepositoryTest {
 
     @Test
     void fetchCountries_returnSuccess() {
-        final List<CountryInfo> countryInfoList = new ArrayList<>();
-        countryInfoList.add(new CountryInfo("India", "Delhi", "Asia", 12334, "flag.svg"));
+        final List<Country> countryList = new ArrayList<>();
+        countryList.add(new Country("India", "Delhi", "Asia", 12334, "flag.svg"));
 
-        when(countryService.getCountries()).thenReturn(Flowable.just(countryInfoList));
+        when(countryService.getCountries()).thenReturn(Flowable.just(countryList));
 
-        Resource<List<CountryInfo>> listResource = countryRepository.getCountries().blockingFirst();
+        Resource<List<Country>> listResource = countryRepository.getCountries().blockingFirst();
 
         verify(countryService).getCountries();
         verifyNoMoreInteractions(countryService);
 
-        Assertions.assertEquals(Resource.success(countryInfoList), listResource);
+        Assertions.assertEquals(Resource.success(countryList), listResource);
     }
 
     @Test
     void fetchCountries_returnError() {
         when(countryService.getCountries()).thenReturn(Flowable.error(new Throwable()));
 
-        Resource<List<CountryInfo>> listResource = countryRepository.getCountries().blockingFirst();
+        Resource<List<Country>> listResource = countryRepository.getCountries().blockingFirst();
 
         verify(countryService).getCountries();
         verifyNoMoreInteractions(countryService);

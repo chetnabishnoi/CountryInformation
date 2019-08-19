@@ -1,6 +1,6 @@
 package com.countryinformation.viewmodel;
 
-import com.countryinformation.model.CountryInfo;
+import com.countryinformation.model.Country;
 import com.countryinformation.network.Resource;
 import com.countryinformation.repository.CountryRepository;
 import com.countryinformation.util.InstantExecutorExtension;
@@ -21,32 +21,32 @@ import io.reactivex.Flowable;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 @ExtendWith(InstantExecutorExtension.class)
-class MainViewModelTest {
+class HomeViewModelTest {
 
     @Mock
     CountryRepository countryRepository;
-    private MainViewModel mainViewModel;
+    private HomeViewModel homeViewModel;
 
     @BeforeEach
     void initEach() {
         initMocks(this);
-        mainViewModel = new MainViewModel(countryRepository);
+        homeViewModel = new HomeViewModel(countryRepository);
     }
 
     @Test
     void observeCountryList() throws InterruptedException {
-        final List<CountryInfo> countryInfoList = new ArrayList<>();
-        countryInfoList.add(new CountryInfo("India", "Delhi", "Asia", 12334, "flag.svg"));
+        final List<Country> countryList = new ArrayList<>();
+        countryList.add(new Country("India", "Delhi", "Asia", 12334, "flag.svg"));
 
-        Resource<List<CountryInfo>> returnedData = Resource.success(countryInfoList);
+        Resource<List<Country>> returnedData = Resource.success(countryList);
 
-        LiveDataTestUtil<Resource<List<CountryInfo>>> liveDataTestUtil = new LiveDataTestUtil<>();
-        Flowable<Resource<List<CountryInfo>>> returnedValue = Flowable.just(returnedData);
+        LiveDataTestUtil<Resource<List<Country>>> liveDataTestUtil = new LiveDataTestUtil<>();
+        Flowable<Resource<List<Country>>> returnedValue = Flowable.just(returnedData);
         Mockito.when(countryRepository.getCountries()).thenReturn(returnedValue);
 
-        mainViewModel.getCountries();
+        homeViewModel.getCountries();
 
-        Resource<List<CountryInfo>> observedData = liveDataTestUtil.getValue(mainViewModel.observeCountryList());
+        Resource<List<Country>> observedData = liveDataTestUtil.getValue(homeViewModel.observeCountryList());
 
         Assertions.assertEquals(returnedData, observedData);
 
@@ -54,15 +54,15 @@ class MainViewModelTest {
 
     @Test
     void observeCountryList_error() throws InterruptedException {
-        Resource<List<CountryInfo>> returnedData = Resource.error("Error", null);
+        Resource<List<Country>> returnedData = Resource.error("Error", null);
 
-        LiveDataTestUtil<Resource<List<CountryInfo>>> liveDataTestUtil = new LiveDataTestUtil<>();
-        Flowable<Resource<List<CountryInfo>>> returnedValue = Flowable.just(returnedData);
+        LiveDataTestUtil<Resource<List<Country>>> liveDataTestUtil = new LiveDataTestUtil<>();
+        Flowable<Resource<List<Country>>> returnedValue = Flowable.just(returnedData);
         Mockito.when(countryRepository.getCountries()).thenReturn(returnedValue);
 
-        mainViewModel.getCountries();
+        homeViewModel.getCountries();
 
-        Resource<List<CountryInfo>> observedData = liveDataTestUtil.getValue(mainViewModel.observeCountryList());
+        Resource<List<Country>> observedData = liveDataTestUtil.getValue(homeViewModel.observeCountryList());
 
         Assertions.assertEquals(returnedData, observedData);
 

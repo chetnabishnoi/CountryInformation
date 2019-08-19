@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.RequestBuilder;
 import com.countryinformation.R;
-import com.countryinformation.model.CountryInfo;
+import com.countryinformation.model.Country;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,22 +20,22 @@ import java.util.List;
 public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
     private static final int COUNTRY_TYPE = 1;
-    private List<CountryInfo> countryList;
-    private List<CountryInfo> filteredList;
+    private List<Country> countryList;
+    private List<Country> filteredList;
 
     private OnCountryListener mOnCountryListener;
     private RequestBuilder<PictureDrawable> requestBuilder;
-    
+
     private Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<CountryInfo> filteredList = new ArrayList<>();
+            List<Country> filteredList = new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
                 filteredList.addAll(CountryRecyclerAdapter.this.filteredList);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (CountryInfo item : CountryRecyclerAdapter.this.filteredList) {
+                for (Country item : CountryRecyclerAdapter.this.filteredList) {
                     if (item.getName().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
@@ -52,7 +52,7 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         protected void publishResults(CharSequence constraint, FilterResults results) {
             if (results.values != null) {
                 countryList.clear();
-                countryList.addAll((List<CountryInfo>) results.values);
+                countryList.addAll((List<Country>) results.values);
                 notifyDataSetChanged();
             }
         }
@@ -71,12 +71,12 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHold, int i) {
-        CountryInfo countryInfo = countryList.get(i);
-        CountryViewHolder viewHolder = (CountryViewHolder) viewHold;
-        requestBuilder.load(countryInfo.getFlag()).into(viewHolder.image);
-        viewHolder.name.setText(countryInfo.getName());
-        viewHolder.capital.setText(countryInfo.getCapital());
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, final int position) {
+        Country country = countryList.get(position);
+        CountryViewHolder countryViewHolder = (CountryViewHolder) viewHolder;
+        requestBuilder.load(country.getFlag()).into(countryViewHolder.image);
+        countryViewHolder.name.setText(country.getName());
+        countryViewHolder.capital.setText(country.getCapital());
     }
 
     @Override
@@ -92,7 +92,7 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         return 0;
     }
 
-    public CountryInfo getSelectedCountry(int position) {
+    public Country getSelectedCountry(int position) {
         if (countryList != null) {
             if (countryList.size() > 0) {
                 return countryList.get(position);
@@ -106,7 +106,7 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         return exampleFilter;
     }
 
-    public void setCountries(List<CountryInfo> countryList) {
+    public void setCountries(List<Country> countryList) {
         this.countryList = countryList;
         this.filteredList = new ArrayList<>(countryList);
         notifyDataSetChanged();

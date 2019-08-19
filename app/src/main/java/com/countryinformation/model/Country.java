@@ -6,17 +6,17 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CountryInfo implements Parcelable {
+public class Country implements Parcelable {
 
-    public static final Creator<CountryInfo> CREATOR = new Creator<CountryInfo>() {
+    public static final Creator<Country> CREATOR = new Creator<Country>() {
         @Override
-        public CountryInfo createFromParcel(Parcel in) {
-            return new CountryInfo(in);
+        public Country createFromParcel(Parcel in) {
+            return new Country(in);
         }
 
         @Override
-        public CountryInfo[] newArray(int size) {
-            return new CountryInfo[size];
+        public Country[] newArray(int size) {
+            return new Country[size];
         }
     };
     @SerializedName("name")
@@ -35,11 +35,11 @@ public class CountryInfo implements Parcelable {
     @Expose
     private String flag;
 
-    public CountryInfo() {
+    public Country() {
     }
 
 
-    public CountryInfo(String name, String capital, String region, long population, String flag) {
+    public Country(String name, String capital, String region, long population, String flag) {
         this.name = name;
         this.capital = capital;
         this.region = region;
@@ -47,7 +47,7 @@ public class CountryInfo implements Parcelable {
         this.flag = flag;
     }
 
-    protected CountryInfo(Parcel in) {
+    protected Country(Parcel in) {
         name = in.readString();
         capital = in.readString();
         region = in.readString();

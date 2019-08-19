@@ -22,13 +22,17 @@ import com.countryinformation.HomeActivity;
 import com.countryinformation.R;
 import com.countryinformation.adapter.CountryRecyclerAdapter;
 import com.countryinformation.adapter.OnCountryListener;
-import com.countryinformation.model.CountryInfo;
-import com.countryinformation.viewmodel.MainViewModel;
+import com.countryinformation.model.Country;
+import com.countryinformation.viewmodel.HomeViewModel;
 import com.countryinformation.viewmodel.ViewModelFactory;
 
 import javax.inject.Inject;
 
-
+/**
+ * This fragment shows the list of all the countries available.
+ * It fetches the list from api and shows the flag and country name.
+ * User can also search by the country name on this page.
+ */
 public class HomeFragment extends BaseFragment implements OnCountryListener {
 
     public static final String TAG = "HomeFragment";
@@ -37,7 +41,7 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
     @Inject
     RequestBuilder<PictureDrawable> glide;
 
-    private MainViewModel mainViewModel;
+    private HomeViewModel homeViewModel;
     private RecyclerView mRecyclerView;
     private SearchView mSearchView;
     private CountryRecyclerAdapter mAdapter;
@@ -48,6 +52,7 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -61,7 +66,7 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
 
         initRecyclerView(glide);
         initSearchView();
-        mainViewModel = new ViewModelProvider(this, viewModelFactory).get(MainViewModel.class);
+        homeViewModel = new ViewModelProvider(this, viewModelFactory).get(HomeViewModel.class);
 
     }
 
@@ -101,8 +106,9 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
         });
     }
 
+    //Subscribe to the country list observable from view model
     private void subscribeObservers() {
-        mainViewModel.observeCountryList().observe(this, resource -> {
+        homeViewModel.observeCountryList().observe(this, resource -> {
             if (resource != null) {
                 switch (resource.status) {
                     case LOADING:
@@ -122,13 +128,19 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
             }
         });
 
-        mainViewModel.getCountries();
+        //Fetch the list of countries
+        homeViewModel.getCountries();
     }
 
+    /**
+     * Opens the detail page for the selected country
+     *
+     * @param position that has been clicked
+     */
     @Override
     public void onCountryClick(int position) {
         mSearchView.setQuery("", false);
-        CountryInfo selectedCountry = mAdapter.getSelectedCountry(position);
+        Country selectedCountry = mAdapter.getSelectedCountry(position);
         if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
             ((HomeActivity) getActivity()).show(selectedCountry);
         }
