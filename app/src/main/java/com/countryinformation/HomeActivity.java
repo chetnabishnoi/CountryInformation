@@ -23,16 +23,16 @@ public class HomeActivity extends DaggerAppCompatActivity {
     }
 
     /**
-     * Shows the product detail fragment
+     * Shows the country detail fragment
      */
     public void show(CountryInfo countryInfo) {
-        DetailFragment productFragment = DetailFragment.createInstance(countryInfo);
+        DetailFragment detailFragment = DetailFragment.createInstance(countryInfo);
 
         getSupportFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                 .addToBackStack("detail")
-                .add(R.id.fragment_container, productFragment, null)
+                .add(R.id.fragment_container, detailFragment, null)
                 .commit();
     }
 }

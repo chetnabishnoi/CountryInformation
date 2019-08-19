@@ -17,20 +17,21 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.RequestBuilder;
 import com.countryinformation.R;
-import com.countryinformation.glide.GlideApp;
-import com.countryinformation.glide.SvgSoftwareLayerSetter;
 import com.countryinformation.model.CountryInfo;
 
 import java.text.DecimalFormat;
 
-import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
+import javax.inject.Inject;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DetailFragment extends Fragment {
+public class DetailFragment extends BaseFragment {
     private static final String ARG_COUNTRY_DETAIL = "COUNTRY_DETAIL";
     private CountryInfo countryInfo;
+
+    @Inject
+    RequestBuilder<PictureDrawable> glide;
 
     /**
      * Creates detail fragment for specific country
@@ -74,11 +75,11 @@ public class DetailFragment extends Fragment {
         DecimalFormat formatter = new DecimalFormat("##,###,###");
         String populationValue = formatter.format(countryInfo.getPopulation());
         population.setText(populationValue);
-        RequestBuilder<PictureDrawable> requestBuilder = initGlide();
-        requestBuilder.load(countryInfo.getFlag()).into((ImageView) view.findViewById(R.id.image_flag));
+        glide.load(countryInfo.getFlag()).into((ImageView) view.findViewById(R.id.image_flag));
 
         setupToolbar(view.findViewById(R.id.toolbar));
     }
+
 
     private void setupToolbar(Toolbar toolbar) {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -87,14 +88,4 @@ public class DetailFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.detail_fragment_title));
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
     }
-
-    private RequestBuilder<PictureDrawable> initGlide() {
-        return GlideApp.with(this)
-                .as(PictureDrawable.class)
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_background)
-                .transition(withCrossFade())
-                .listener(new SvgSoftwareLayerSetter());
-    }
-
 }

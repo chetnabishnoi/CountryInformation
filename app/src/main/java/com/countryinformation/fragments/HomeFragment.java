@@ -22,21 +22,20 @@ import com.countryinformation.HomeActivity;
 import com.countryinformation.R;
 import com.countryinformation.adapter.CountryRecyclerAdapter;
 import com.countryinformation.adapter.OnCountryListener;
-import com.countryinformation.glide.GlideApp;
-import com.countryinformation.glide.SvgSoftwareLayerSetter;
 import com.countryinformation.model.CountryInfo;
 import com.countryinformation.viewmodel.MainViewModel;
 import com.countryinformation.viewmodel.ViewModelFactory;
 
 import javax.inject.Inject;
 
-import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class HomeFragment extends BaseFragment implements OnCountryListener {
 
     public static final String TAG = "HomeFragment";
     @Inject
     ViewModelFactory viewModelFactory;
+    @Inject
+    RequestBuilder<PictureDrawable> glide;
 
     private MainViewModel mainViewModel;
     private RecyclerView mRecyclerView;
@@ -44,6 +43,7 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
     private CountryRecyclerAdapter mAdapter;
     private RelativeLayout progressBar, parentErrorView;
     private Context mContext;
+
 
     @Nullable
     @Override
@@ -59,7 +59,7 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
         progressBar = view.findViewById(R.id.progress_bar_parent);
         parentErrorView = view.findViewById(R.id.parent_error);
 
-        initRecyclerView(initGlide());
+        initRecyclerView(glide);
         initSearchView();
         mainViewModel = new ViewModelProvider(this, viewModelFactory).get(MainViewModel.class);
 
@@ -83,15 +83,6 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
         mRecyclerView.addItemDecoration(itemDecor);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-    }
-
-    private RequestBuilder<PictureDrawable> initGlide() {
-        return GlideApp.with(this)
-                .as(PictureDrawable.class)
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_background)
-                .transition(withCrossFade())
-                .listener(new SvgSoftwareLayerSetter());
     }
 
     private void initSearchView() {
