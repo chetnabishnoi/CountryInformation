@@ -3,6 +3,7 @@ package com.countryinformation.repository;
 import com.countryinformation.model.Country;
 import com.countryinformation.network.CountryService;
 import com.countryinformation.network.Resource;
+import com.countryinformation.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class CountryRepository {
                 .onErrorReturn(throwable -> new ArrayList<>())
                 .map((Function<List<Country>, Resource<List<Country>>>) countryInfoList -> {
                     if (countryInfoList.size() == 0) {
-                        return Resource.error("Could not get the list of countries", null);
+                        return Resource.error(Constants.EMPTY_LIST_ERROR, null);
                     }
                     return Resource.success(countryInfoList);
                 })

@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Lifecycle;
 
 import com.bumptech.glide.RequestBuilder;
 import com.countryinformation.R;
@@ -86,15 +85,13 @@ public class DetailFragment extends DaggerFragment {
 
 
     private void setupToolbar(Toolbar toolbar) {
-        if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-            ActionBar supportActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-            if (supportActionBar != null) {
-                supportActionBar.setDisplayHomeAsUpEnabled(true);
-                supportActionBar.setDisplayShowHomeEnabled(true);
-                supportActionBar.setTitle(getString(R.string.detail_fragment_title));
-                toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
-            }
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ActionBar supportActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+            supportActionBar.setDisplayShowHomeEnabled(true);
+            supportActionBar.setTitle(getString(R.string.detail_fragment_title));
+            toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         }
     }
 }
