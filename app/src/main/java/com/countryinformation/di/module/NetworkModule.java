@@ -1,4 +1,4 @@
-package com.countryinformation.dagger.module;
+package com.countryinformation.di.module;
 
 import android.app.Application;
 

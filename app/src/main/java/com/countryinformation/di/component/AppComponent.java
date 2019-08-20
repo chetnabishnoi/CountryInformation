@@ -1,12 +1,13 @@
-package com.countryinformation.dagger.component;
+package com.countryinformation.di.component;
 
 import android.app.Application;
 
 import com.countryinformation.MainApplication;
-import com.countryinformation.dagger.module.ActivityBuildersModule;
-import com.countryinformation.dagger.module.AppModule;
-import com.countryinformation.dagger.module.NetworkModule;
-import com.countryinformation.dagger.module.ViewModelFactoryModule;
+import com.countryinformation.di.module.AppModule;
+import com.countryinformation.di.module.DetailModule;
+import com.countryinformation.di.module.HomeModule;
+import com.countryinformation.di.module.NetworkModule;
+import com.countryinformation.di.module.ViewModelFactoryModule;
 
 import javax.inject.Singleton;
 
@@ -18,10 +19,11 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Singleton
 @Component(
         modules = {AndroidSupportInjectionModule.class,
-                ActivityBuildersModule.class,
                 AppModule.class,
                 ViewModelFactoryModule.class,
-                NetworkModule.class
+                NetworkModule.class,
+                HomeModule.class,
+                DetailModule.class
         }
 )
 public interface AppComponent extends AndroidInjector<MainApplication> {

@@ -1,7 +1,7 @@
 package com.countryinformation;
 
 
-import com.countryinformation.dagger.component.DaggerAppComponent;
+import com.countryinformation.di.component.DaggerAppComponent;
 
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;

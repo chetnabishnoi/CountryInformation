@@ -1,4 +1,4 @@
-package com.countryinformation.dagger;
+package com.countryinformation.di;
 
 
 import androidx.lifecycle.ViewModel;
