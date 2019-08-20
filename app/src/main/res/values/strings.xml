@@ -2,4 +2,7 @@
     <string name="app_name">Country Information</string>
     <string name="oops_an_error_occurred">Oops! An error occurred.</string>
     <string name="detail_fragment_title">Country Information</string>
+    <string name="capital">Capital :</string>
+    <string name="region">Region :</string>
+    <string name="population">Population :</string>
 </resources>

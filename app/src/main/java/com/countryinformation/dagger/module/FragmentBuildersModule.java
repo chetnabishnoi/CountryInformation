@@ -1,7 +1,7 @@
 package com.countryinformation.dagger.module;
 
-import com.countryinformation.fragments.DetailFragment;
-import com.countryinformation.fragments.HomeFragment;
+import com.countryinformation.detail.DetailFragment;
+import com.countryinformation.home.HomeFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

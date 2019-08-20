@@ -1,4 +1,4 @@
-package com.countryinformation.viewmodel;
+package com.countryinformation.home.viewmodel;
 
 import com.countryinformation.model.Country;
 import com.countryinformation.network.Resource;
@@ -44,7 +44,7 @@ class HomeViewModelTest {
         Flowable<Resource<List<Country>>> returnedValue = Flowable.just(returnedData);
         Mockito.when(countryRepository.getCountries()).thenReturn(returnedValue);
 
-        homeViewModel.getCountries();
+        homeViewModel.fetchCountries();
 
         Resource<List<Country>> observedData = liveDataTestUtil.getValue(homeViewModel.observeCountryList());
 
@@ -60,7 +60,7 @@ class HomeViewModelTest {
         Flowable<Resource<List<Country>>> returnedValue = Flowable.just(returnedData);
         Mockito.when(countryRepository.getCountries()).thenReturn(returnedValue);
 
-        homeViewModel.getCountries();
+        homeViewModel.fetchCountries();
 
         Resource<List<Country>> observedData = liveDataTestUtil.getValue(homeViewModel.observeCountryList());
 

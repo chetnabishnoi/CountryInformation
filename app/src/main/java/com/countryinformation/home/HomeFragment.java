@@ -1,4 +1,4 @@
-package com.countryinformation.fragments;
+package com.countryinformation.home;
 
 import android.content.Context;
 import android.graphics.drawable.PictureDrawable;
@@ -18,24 +18,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.RequestBuilder;
-import com.countryinformation.HomeActivity;
 import com.countryinformation.R;
 import com.countryinformation.adapter.CountryRecyclerAdapter;
 import com.countryinformation.adapter.OnCountryListener;
+import com.countryinformation.home.viewmodel.HomeViewModel;
 import com.countryinformation.model.Country;
-import com.countryinformation.viewmodel.HomeViewModel;
-import com.countryinformation.viewmodel.ViewModelFactory;
+import com.countryinformation.utils.ViewModelFactory;
 
 import javax.inject.Inject;
+
+import dagger.android.support.DaggerFragment;
 
 /**
  * This fragment shows the list of all the countries available.
  * It fetches the list from api and shows the flag and country name.
  * User can also search by the country name on this page.
  */
-public class HomeFragment extends BaseFragment implements OnCountryListener {
+public class HomeFragment extends DaggerFragment implements OnCountryListener {
 
-    public static final String TAG = "HomeFragment";
+    static final String TAG = "HomeFragment";
+
     @Inject
     ViewModelFactory viewModelFactory;
     @Inject
@@ -67,19 +69,13 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
         initRecyclerView(glide);
         initSearchView();
         homeViewModel = new ViewModelProvider(this, viewModelFactory).get(HomeViewModel.class);
-
+        subscribeObservers();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        subscribeObservers();
     }
 
     private void initRecyclerView(final RequestBuilder<PictureDrawable> requestBuilder) {
@@ -127,9 +123,7 @@ public class HomeFragment extends BaseFragment implements OnCountryListener {
                 }
             }
         });
-
-        //Fetch the list of countries
-        homeViewModel.getCountries();
+        homeViewModel.fetchCountries();
     }
 
     /**

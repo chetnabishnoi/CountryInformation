@@ -1,6 +1,6 @@
 package com.countryinformation.dagger.module;
 
-import com.countryinformation.HomeActivity;
+import com.countryinformation.home.HomeActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

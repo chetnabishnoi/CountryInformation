@@ -1,4 +1,4 @@
-package com.countryinformation.viewmodel;
+package com.countryinformation.home.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
@@ -24,7 +24,7 @@ public class HomeViewModel extends ViewModel {
         this.countryRepository = countryRepository;
     }
 
-    public void getCountries() {
+    public void fetchCountries() {
         mObservableCountries.setValue(Resource.loading(null));
         LiveData<Resource<List<Country>>> source = LiveDataReactiveStreams.fromPublisher(countryRepository.getCountries());
         mObservableCountries.addSource(source, resource -> {

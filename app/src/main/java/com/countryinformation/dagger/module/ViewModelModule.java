@@ -4,7 +4,7 @@ package com.countryinformation.dagger.module;
 import androidx.lifecycle.ViewModel;
 
 import com.countryinformation.dagger.ViewModelKey;
-import com.countryinformation.viewmodel.HomeViewModel;
+import com.countryinformation.home.viewmodel.HomeViewModel;
 
 import dagger.Binds;
 import dagger.Module;

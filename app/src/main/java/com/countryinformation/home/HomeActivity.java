@@ -1,16 +1,18 @@
-package com.countryinformation;
+package com.countryinformation.home;
 
 import android.os.Bundle;
 
-import com.countryinformation.fragments.DetailFragment;
-import com.countryinformation.fragments.HomeFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.countryinformation.R;
+import com.countryinformation.detail.DetailFragment;
 import com.countryinformation.model.Country;
 
 import dagger.android.support.DaggerAppCompatActivity;
 
 public class HomeActivity extends DaggerAppCompatActivity {
-
-    private HomeFragment homeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +20,7 @@ public class HomeActivity extends DaggerAppCompatActivity {
         setContentView(R.layout.activity_home);
 
         if (savedInstanceState == null) {
-            homeFragment = new HomeFragment();
+            HomeFragment homeFragment = new HomeFragment();
 
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, homeFragment, HomeFragment.TAG).commit();
@@ -30,13 +32,16 @@ public class HomeActivity extends DaggerAppCompatActivity {
      */
     public void show(Country country) {
         DetailFragment detailFragment = DetailFragment.createInstance(country);
-
-        getSupportFragmentManager()
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        Fragment fragmentByTag = supportFragmentManager.findFragmentByTag(HomeFragment.TAG);
+        FragmentTransaction transaction = supportFragmentManager
                 .beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                 .addToBackStack("detail")
-                .add(R.id.fragment_container, detailFragment, null)
-                .hide(homeFragment)
-                .commit();
+                .add(R.id.fragment_container, detailFragment, null);
+        if (fragmentByTag != null) {
+            transaction.hide(fragmentByTag);
+        }
+        transaction.commit();
     }
 }

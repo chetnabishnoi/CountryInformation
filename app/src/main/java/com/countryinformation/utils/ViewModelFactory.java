@@ -1,4 +1,4 @@
-package com.countryinformation.viewmodel;
+package com.countryinformation.utils;
 
 
 import androidx.lifecycle.ViewModel;

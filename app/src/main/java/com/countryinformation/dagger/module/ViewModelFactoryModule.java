@@ -3,7 +3,7 @@ package com.countryinformation.dagger.module;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.countryinformation.viewmodel.ViewModelFactory;
+import com.countryinformation.utils.ViewModelFactory;
 
 import dagger.Binds;
 import dagger.Module;

@@ -1,4 +1,4 @@
-package com.countryinformation.fragments;
+package com.countryinformation.detail;
 
 
 import android.graphics.drawable.PictureDrawable;
@@ -11,8 +11,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Lifecycle;
 
 import com.bumptech.glide.RequestBuilder;
 import com.countryinformation.R;
@@ -22,11 +24,13 @@ import java.text.DecimalFormat;
 
 import javax.inject.Inject;
 
+import dagger.android.support.DaggerFragment;
+
 /**
  * This fragment shows detail about the country selected like
  * name, capital, population etc.
  */
-public class DetailFragment extends BaseFragment {
+public class DetailFragment extends DaggerFragment {
     private static final String ARG_COUNTRY_DETAIL = "COUNTRY_DETAIL";
     //For showing the svg pictures
     @Inject
@@ -82,10 +86,15 @@ public class DetailFragment extends BaseFragment {
 
 
     private void setupToolbar(Toolbar toolbar) {
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.detail_fragment_title));
-        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
+        if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+            ActionBar supportActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if (supportActionBar != null) {
+                supportActionBar.setDisplayHomeAsUpEnabled(true);
+                supportActionBar.setDisplayShowHomeEnabled(true);
+                supportActionBar.setTitle(getString(R.string.detail_fragment_title));
+                toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
+            }
+        }
     }
 }
