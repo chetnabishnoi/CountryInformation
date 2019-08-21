@@ -16,7 +16,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 @Singleton
-public class CountryRepository {
+public class CountryRepository implements Repository {
     private final CountryService countryService;
 
     @Inject
