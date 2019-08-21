@@ -21,8 +21,6 @@ buildscript {
         lifecycleVersion = '2.2.0-alpha03'
         reactivestreamsVersion = "2.2.0-alpha03"
 
-        navVersion = "2.2.0-alpha01"
-
         glideVersion='4.9.0'
 
         rxJavaVersion = '2.2.11'
