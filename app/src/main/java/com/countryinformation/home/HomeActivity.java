@@ -22,7 +22,7 @@ public class HomeActivity extends AppCompatActivity {
             HomeFragment homeFragment = new HomeFragment();
 
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, homeFragment, HomeFragment.TAG).commit();
+                    .replace(R.id.fragment_container, homeFragment, HomeFragment.TAG).commitNow();
         }
     }
 
@@ -33,6 +33,7 @@ public class HomeActivity extends AppCompatActivity {
         DetailFragment detailFragment = DetailFragment.createInstance(country);
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         Fragment fragmentByTag = supportFragmentManager.findFragmentByTag(HomeFragment.TAG);
+
         FragmentTransaction transaction = supportFragmentManager
                 .beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
